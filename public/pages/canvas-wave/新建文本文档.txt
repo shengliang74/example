@@ -1,0 +1,27 @@
+
+js 接受byte生成文件
+https://blog.csdn.net/Hedy17/article/details/80647652
+https://blog.csdn.net/qq_26769677/article/details/82840384
+https://blog.csdn.net/zhq2005095/article/details/89069851
+https://blog.csdn.net/sz85850597/article/details/85052213
+https://www.cnblogs.com/zhusf/p/11123464.html arraybuffer转Json
+https://bbs.csdn.net/topics/190127042
+https://www.jianshu.com/p/cbd0d1129b89
+
+https://blog.csdn.net/u012894692/article/details/88846401
+https://segmentfault.com/a/1190000004322487#articleHeader7
+
+new FileReader()
+ArrayBuffer
+var enc = new TextDecoder('utf-8') 
+var res = JSON.parse(enc.decode(new Uint8Array(err.data))) //转化成json对象
+
+// 创建二进制对象写入转换好的字节流
+      const href = URL.createObjectURL(tmpDown) // 创建对象超链接
+      const domHf = document.getElementById('hf');
+      domHf.href = href // 绑定a标签
+      domHf.setAttribute('download', fileName || '导出.xlsx') // 设置导出文件名称
+      domHf.click() // 模拟点击实现下载
+      setTimeout(function() { // 延时释放
+        URL.revokeObjectURL(tmpDown) // 用URL.revokeObjectURL()来释放这个object URL
+      }, 100)

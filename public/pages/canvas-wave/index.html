@@ -1,0 +1,259 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport"
+        content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <title>波浪</title>
+    <style>
+        .m-wave {
+            position: relative;
+            margin: 0 auto;
+            overflow: hidden;
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            z-index: 50;
+            border: 1px solid red;
+        }
+
+        .wave-svg-content {
+            position: absolute;
+            top: 70px;
+            left: 0;
+            width: 150px;
+            height: 150px;
+            /* background: linear-gradient(rgba(255, 255, 255, 0) 0%, rgba(8, 157, 226, .2) 10%, rgba(8, 157, 226, .9) 20%, rgba(8, 157, 226, .9) 100%); */
+        }
+
+        .wave-svg-shape {
+            position: relative;
+            width: 100%;
+            height: 200px;
+            /* overflow: hidden; */
+        }
+
+        .wave-svg-wrap {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 319px;
+            height: 115px;
+            background: url('./bg.png') no-repeat;
+            background-size: auto 100%;
+        }
+
+        /* .wave-svg-wrap2 {
+            position: absolute;
+            top: 0;
+            left: -55px;
+            width: 319px;
+            height: 115px;
+            background: url('./bg.png') no-repeat;
+            background-size: auto 100%;
+        } */
+    </style>
+</head>
+
+<body>
+    <div class="m-wave">
+        <div class="wave-svg-content" ref='waveSvgContent'>
+            <div class="wave-svg-shape">
+                <div class="wave-svg-wrap"></div>
+            </div>
+        </div>
+    </div>
+    <svg class="wave-svg" xmlns="http://www.w3.org/2000/svg" id="738255fe-a9fa-4a5e-963a-8e97f59370ad" data-name="3-waves" viewBox="0 0 600 215.43"><title>wave shape</title><path class="871c1787-a7ef-4a54-ad03-3cd50e05767a" d="M639,986.07c-17-1-27.33-.33-40.5,2.67s-24.58,11.84-40.46,15c-13.56,2.69-31.27,2.9-46.2,1.35-17.7-1.83-35-9.06-35-9.06S456,987.07,439,986.07s-27.33-.33-40.5,2.67-24.58,11.84-40.46,15c-13.56,2.69-31.27,2.9-46.2,1.35-17.7-1.83-35-9.06-35-9.06S256,987.07,239,986.07s-27.33-.33-40.5,2.67-24.58,11.84-40.46,15c-13.56,2.69-31.27,2.9-46.2,1.35-17.7-1.83-35-9.06-35-9.06v205.06h600V996S656,987.07,639,986.07Z" transform="translate(-76 -985)"></path></svg>
+    <!-- <div class="m-wave">
+        <div class="wave-svg-content" ref='waveSvgContent'>
+            <div class="wave-svg-shape">
+                <div class="wave-svg-wrap2"></div>
+            </div>
+        </div>
+    </div> -->
+</body>
+<script>
+    /*
+        
+        参考维基百科
+        
+        http://zh.wikipedia.org/wiki/%E8%B2%9D%E8%8C%B2%E6%9B%B2%E7%B7%9A
+        
+        */
+
+    function Point2D(x, y) {
+
+        this.x = x || 0.0;
+
+        this.y = y || 0.0;
+
+    }
+
+    /*
+    
+     cp在此是四個元素的陣列:
+    
+     cp[0]為起始點，或上圖中的P0
+    
+     cp[1]為第一個控制點，或上圖中的P1
+    
+     cp[2]為第二個控制點，或上圖中的P2
+    
+     cp[3]為結束點，或上圖中的P3
+    
+     t為參數值，0 <= t <= 1
+    
+    */
+
+    function PointOnCubicBezier(cp, t) {
+
+        var ax, bx, cx;
+
+        var ay, by, cy;
+
+        var tSquared, tCubed;
+
+        var result = new Point2D;
+
+        /*計算多項式係數*/
+
+        cx = 3.0 * (cp[1].x - cp[0].x);
+
+        bx = 3.0 * (cp[2].x - cp[1].x) - cx;
+
+        ax = cp[3].x - cp[0].x - cx - bx;
+
+        cy = 3.0 * (cp[1].y - cp[0].y);
+
+        by = 3.0 * (cp[2].y - cp[1].y) - cy;
+
+        ay = cp[3].y - cp[0].y - cy - by;
+
+        /*計算位於參數值t的曲線點*/
+
+        tSquared = t * t;
+
+        tCubed = tSquared * t;
+
+        result.x = (ax * tCubed) + (bx * tSquared) + (cx * t) + cp[0].x;
+
+        result.y = (ay * tCubed) + (by * tSquared) + (cy * t) + cp[0].y;
+
+        return result;
+
+    }
+
+    /*
+    
+     ComputeBezier以控制點cp所產生的曲線點，填入Point2D結構的陣列。
+    
+     呼叫者必須分配足夠的記憶體以供輸出結果，其為<sizeof(Point2D) numberOfPoints>
+    
+    */
+
+    function ComputeBezier(cp, numberOfPoints, curve) {
+
+        var dt;
+
+        var i;
+
+        dt = 1.0 / (numberOfPoints - 1);
+
+        for (i = 0; i < numberOfPoints; i++)
+
+            curve[i] = PointOnCubicBezier(cp, i * dt);
+
+    }
+
+    // var cp=[
+
+    //   new Point2D(20, 0), new Point2D(100, 200), new Point2D(300, -200), new Point2D(400, 0)
+
+    // ];
+
+    var cp = [
+
+        new Point2D(0, 0), new Point2D(15, 83), new Point2D(42, 94), new Point2D(100, 100)
+
+    ];
+
+    var numberOfPoints = 180; // 得到分数后的3秒停下来 每秒requestAnimationFrame执行60次故180
+
+    var curve = [];
+
+    ComputeBezier(cp, numberOfPoints, curve);
+
+
+    var domMWave = document.getElementsByClassName('wave-svg-content')[0];
+    var domWaveSvgWrap = document.getElementsByClassName('wave-svg-wrap')[0];
+    var topDistance = 150;
+    var rightDistance = 0;
+    var myReq = null;
+    var myReq2 = null;
+    var moveStart = function () {
+        console.log("zzz")
+        if (rightDistance > 114) {
+            rightDistance = 0
+        }
+        rightDistance = rightDistance + 3.5;
+        if (topDistance > 100) {
+            topDistance = topDistance - 0.16;
+            domMWave.style.top = topDistance + 'px';
+        }
+        domWaveSvgWrap.style.right = '-' + rightDistance + 'px';
+        myReq = window.requestAnimationFrame(moveStart)
+    }
+    moveStart();
+    console.log(curve)
+    var targetTop = 50;
+    var endFn = function () {
+        var curRight = domWaveSvgWrap.style.right;
+        var curTop = domMWave.style.top;
+        curRight = Number(curRight.replace('-', '').replace('px', ''));
+        curTop = Number(curTop.replace('-', '').replace('px', ''));
+        var i = 0;
+        var speed = (curTop - targetTop)/180;
+        var y = 0;
+        window.cancelAnimationFrame(myReq);
+        function moveEnd(){
+            if (curRight > 114) {
+                curRight = 0
+            }
+            // 为了使向右移动的和向上移动协调(不至于一个过快一个过慢,目前是向右移动会笔记慢,向上笔记快),先过两秒正常向右和向上移动,在最后一秒减速停下来
+            if(y< 120){
+                y++;
+                console.log(y)
+                curRight = curRight + 3.5;
+                domWaveSvgWrap.style.right = '-' + curRight + 'px';
+                console.log("curTop1",curTop)
+                if(curTop > targetTop){
+                    curTop = curTop - speed;
+                    console.log("curTop",curTop)
+                    domMWave.style.top = curTop + 'px';
+                }
+                myReq2 = window.requestAnimationFrame(moveEnd)
+            }else if(i< curve.length-1){
+                i++;
+                console.log(i)
+                curRight = curRight + 3.5 * Math.floor(100 - curve[i].y)/100;
+                domWaveSvgWrap.style.right = '-' + curRight + 'px';
+                console.log("curTop1",curTop)
+                if(curTop > targetTop){
+                    curTop = curTop - speed;
+                    console.log("curTop",curTop)
+                    domMWave.style.top = curTop + 'px';
+                }
+                myReq2 = window.requestAnimationFrame(moveEnd)
+            }else{
+                window.cancelAnimationFrame(myReq2); 
+            }
+        }
+        moveEnd()
+    }
+    setTimeout(function(){
+        endFn();
+    }, 4000)
+</script>
+
+</html>

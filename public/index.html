@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+    <title>Document</title>
+    <script src="http://wechatfe.github.io/vconsole/lib/vconsole.min.js?v=3.3.0"></script>
+    <style>
+        #test {
+            width: 100%;
+            height: 200px;
+            border: 1px solid red;
+        }
+
+        #wrap {
+            margin: auto;
+            width: 70%;
+            padding: 10px;
+            border: 1px solid blue;
+        }
+
+        .abc {
+            width: 100%;
+            height: 200px;
+            border: 1px solid green;
+        }
+
+        video {
+            width: 100%;
+            border: 1px solid red;
+        }
+        .bfcWrap {
+            margin: 20px;
+            border: 1px solid red;
+            width: 300px;
+            /* height: 300px; */
+            /* overflow: hidden; */
+        }
+        .bfc1 {
+            /* float: left; */
+            /* display: inline-block; */
+            margin: 30px;
+            width: 200px;
+            height: 100px;
+            overflow: visible;
+            /* overflow: hidden; */
+            /* padding:1px; */
+            border: 1px solid green;
+        }
+    </style>
+</head>
+<body>
+    <div class="bfcWrap">
+        <span class="bfc1"></span>
+        <span class="bfc1"></span>
+    </div>
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <div id="wrap">
+        <div id="test"></div>
+    </div>
+    <!-- <video preload controls src="http://192.168.1.106:3000/video/-1311544894.mp4"></video> -->
+    <!-- <video preload controls src="https://v.youku.com/v_show/id_XMzc5MzgzMzk2OA==.html?spm=a2h0k.11417342.soresults.dtitle&_time=7.308"></video> -->
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <div class="abc">1111111111111111111</div>
+</body>
+
+<!-- <script src="https://raw.githubusercontent.com/madrobby/zepto/master/src/zepto.js" type="text/javascript"></script> -->
+<!-- <script src="./javascripts/zepto.js" type="text/javascript"></script> -->
+<!-- <script src="./javascripts/touch.js" type="text/javascript"></script> -->
+<script src="http://cdn.bootcss.com/zepto/1.0rc1/zepto.min.js"></script>
+<script type="text/javascript">
+    window.vConsole = new window.VConsole();
+    var test = $("#test");
+    var $Document = $(document);
+    var wrap = $("#wrap");
+    // wrap.on('touchmove', function (event) {
+    //         // event.preventDefault();
+    // 	}, false);
+    // test.click(function(){
+    //     location.href = "https://m.baidu.com"
+    // })
+    var x = null, y = null, delta = null, isScrolling = null;
+    var num = 0;
+    $Document.on("touchstart", function (e) {
+        console.log(e);
+    })
+    $Document.on("touchmove", function (e) {
+        console.log(e);
+    })
+    // var sss = setInterval(function(){
+    //   test.html(num++)
+    // },1000)
+
+
+
+    // test.on("touchstart",function(e){
+    //     test.append("1");
+    //     x = e.touches[0].pageX;
+    //     y = e.touches[0].pageY;
+
+    // isScrolling = undefined;
+    // },true)
+
+
+    //     test.on("touchmove",function(e){
+
+    //         var touches = e.touches[0]
+    //         // measure change in x and y
+    //         delta = {
+    //           x: touches.pageX - x,
+    //           y: touches.pageY - y
+    //         };
+
+    //         // 是否正向滚动
+    //         var direction = delta.x < 0;
+
+    //         // determine if scrolling test has run - one time test
+    //         if (typeof isScrolling == "undefined") {
+    //           isScrolling = !!(
+    //             isScrolling || Math.abs(delta.x) < Math.abs(delta.y)
+    //           );
+    //         }
+
+    //         console.log(isScrolling);
+    //         console.log(delta.x);
+    //         console.log(delta.y);
+
+    //         // if user is not trying to scroll vertically
+    //         if (!isScrolling) {
+    //           // prevent native scrolling
+    //           e.preventDefault();
+    //             e.stopPropagation();
+    //         }
+    //     });
+    //     test.on("touchend",function(){
+    //         test.append("2");
+    //         test.off("touchstart",function(){},false);
+    //         test.off("touchmove",function(){},false);
+    //         test.off("touchend",function(){},false);
+    //     },true);
+
+
+    test.on("touchstart", function (e) {
+        test.append("1");
+        x = e.touches[0].pageX;
+        y = e.touches[0].pageY;
+
+        isScrolling = undefined;
+        test.on("touchmove", function (e) {
+
+            var touches = e.touches[0]
+            // measure change in x and y
+            delta = {
+                x: touches.pageX - x,
+                y: touches.pageY - y
+            };
+
+            // 是否正向滚动
+            var direction = delta.x < 0;
+
+            // determine if scrolling test has run - one time test
+            if (typeof isScrolling == "undefined") {
+                isScrolling = !!(
+                    isScrolling || Math.abs(delta.x) < Math.abs(delta.y)
+                );
+            }
+
+            console.log(isScrolling);
+            console.log(delta.x);
+            console.log(delta.y);
+
+            // if user is not trying to scroll vertically
+            if (!isScrolling) {
+                // prevent native scrolling
+                e.preventDefault();
+                e.stopPropagation();
+            }
+        });
+        test.on("touchend", function () {
+            test.append("2");
+            test.off("touchstart", function () { }, false);
+            test.off("touchmove", function () { }, false);
+            test.off("touchend", function () { }, false);
+        }, true);
+    }, true)
+
+    // 扁平化多维数组
+    var arr = [1,2,3,[4,5,[6,7,[8]]]]
+    console.log(arr.flat(4));
+    var newArr = [];
+    var flatArr = function(arr){
+        for(let i=0; i<arr.length; i++){
+            if(Array.isArray(arr[i])){
+                flatArr(arr[i])
+            }else{
+                newArr.push(arr[i])
+            }        
+        }
+    }
+    flatArr(arr);
+    console.log(newArr)
+</script>
+
+</html>

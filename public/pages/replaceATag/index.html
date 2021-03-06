@@ -1,0 +1,51 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id='app'></div>
+</body>
+<script type="text/javascript">
+    var dom_app = document.getElementById('app');
+    // var domString = '<p>这个是一个跳转链接<span style="color:#c0392b"><a href="https//m.test.com" target="_blank">测试连接</a></span>11111这个是一个<a href="https://m.baidu.com" target="_blank">跳转链接</a></p>'
+    var domString = '<p>这个是一个跳转链接<span style="color:#c0392b"><span class="addNewSpanTag" href="https://m.test.com" target="_blank">测试连接</span></span>11111这个是一个<span class="addNewSpanTag" href="https://m.baidu.com" target="_blank">跳转链接</span></p>'
+    
+    function dealGoodsDetail(goodsDetail) {
+        console.log(goodsDetail)
+        // const reg = new RegExp('<a href=.+>.+</ a>', 'gi');
+        var reg = new RegExp('<a\\shref=[^>]{1,}>', 'gi');
+        // let test = goodsDetail.match(reg);
+        // console.log(test);
+        var newD = goodsDetail.replace(reg, function(e){
+            console.log(e);
+            return '<span class=\"addNewSpanTag\" ' + e.slice(2);
+        })
+        
+        newD = newD.replace(/\<\/a\>/gi, '</span>')
+        
+        return newD
+    }
+    var tag = dealGoodsDetail(domString);
+    console.log('tag',tag)
+    tag = '<p>这个是一个跳转链接<span style="color:#c0392b">'+'<span class="addNewSpanTag" '+'>测试连接</span></span>11111这个是一个'+'<span class="addNewSpanTag" '+' >跳转链接</span></p>'
+    // dom_app.innerHTML = tag;
+    dom_app.innerHTML = domString;
+
+    var domAddNewSpanTag = document.querySelectorAll('.addNewSpanTag');
+    console.log(domAddNewSpanTag)
+        if (domAddNewSpanTag && domAddNewSpanTag.length > 0) {
+            console.log(domAddNewSpanTag)
+            for (var i = 0; i < domAddNewSpanTag.length; i++) {
+                domAddNewSpanTag[i].onclick = function (e) {
+                    var event = e || window.event;
+                    var target= event.target || event.srcElement; //获取document 对象的引用
+                    if(target.getAttribute('href')){
+                        location.href = target.getAttribute('href')
+                    }
+                }
+            }
+        }
+</script>
+</html>

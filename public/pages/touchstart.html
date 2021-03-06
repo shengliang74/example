@@ -1,0 +1,89 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        div {
+            height: 100px;
+        }
+        .content {
+            margin: auto;
+            width: 330px;
+            border: 1px solid red;
+            overflow: hidden;
+        }
+        .wrap {
+            width: 1248px;
+            font-size: 0;
+        }
+        .item {
+            display: inline-block;
+            width: 300px;
+            margin-right: 10px;
+            border: 1px solid green;
+            background-color: green;
+        }
+        .item:nth-child(2) {
+            border: 1px solid blue;
+            background-color: blue;
+        }
+        .item:nth-child(3) {
+            border: 1px solid gray;
+            background-color: gray;
+        }
+        .item:nth-child(4) {
+            border: 1px solid red;
+            background-color: red;
+        }
+    </style>
+</head>
+<body>
+    <div class="content">
+        <div class="wrap" id="wrap">
+            <div class="item"></div>
+            <div class="item"></div>
+            <div class="item"></div>
+            <div class="item"></div>
+        </div>
+    </div>
+</body>
+<script>
+    var wrap = document.getElementsByClassName('wrap');
+    var startX = null, startY = null, curIndex = 1;
+    var tsFn = function(e){
+        console.log(e)
+        startX = e.touches[0].clientX
+        startY = e.touches[0].clientY
+        document.getElementById('wrap').style.transition = "none";
+        wrap[0].addEventListener('touchmove',tmFn)
+        wrap[0].addEventListener('touchend',teFn)
+    }
+    var tmFn = function(e){
+        var moveX = null, moveY = null;
+        moveX = e.targetTouches[0].clientX - startX
+        moveY = e.targetTouches[0].clientY - startY
+        curIndex--
+        console.log(moveX, curIndex)
+        document.getElementById('wrap').style.transform = "translateX("+ curIndex*-312 + moveX +'px)';
+    }
+    var teFn = function(e){
+        console.log(e)
+        var endX = null, endY = null;
+        endX = e.changedTouches[0].clientX - startX
+        endY = e.changedTouches[0].clientY - startY
+        console.log(endX)
+        if(Math.abs(endX) < 200){
+            document.getElementById('wrap').style.transform = "translateX("+ 0 +'px)';
+            document.getElementById('wrap').style.transition = "all 1s";
+            return
+        }
+         
+        document.getElementById('wrap').style.transform = "translateX("+ curIndex * -312 +'px)';
+        document.getElementById('wrap').style.transition = "all 1s";
+        curIndex++
+    }
+    wrap[0].addEventListener('touchstart',tsFn)
+    console.log(wrap)
+</script>
+</html>

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style type="text/css">
+        * {
+            padding: 0;
+            margin: 0;
+        }
+        .warp {
+            display: inline-flex;
+            flex-flow: column nowrap;
+            justify-content: center;
+            align-items: center;
+            width: 200px;
+            height: 200px;
+            outline: 1px solid red;
+        }
+        .a1 {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: red;
+        }
+    </style>
+</head>
+<body>
+    <div class="warp">
+        <div class="a1"></div>
+    </div>
+    <div class="warp">
+        <div class="a1">13.958+</div>
+    </div>
+    <tt>abc</tt>
+    <blink>abc</blink>
+    <span color="red">abc</span>
+    <font color="red">abc</font>
+    <strike>a</strike>
+    <del>b</del>
+    <ins href="http://www.baidu.com">c</ins>
+</body>
+<script type="text/javascript">
+// const getJson = function(url){
+//     const promise = new Promise(function(resolve, reject){
+//         const handler = function(){
+//             if(this.readyState !== 4){
+//                 return;
+//             }
+//             if(this.status === 200){
+//                 resolve(this.response)
+//             }else{
+//                 reject(new Error(this.statusText))
+//             }
+//         };
+//         const client = new XMLHttpRequest();
+//         client.open("GET", url);
+//         client.onreadystatechang = handler;
+//         client.responseType = 'json';
+//         client.setRequestHeader("Accept","application/json");
+//         client.send();
+//     })
+//     return promise
+// }
+// getJson('post.json').then(function(data){
+//     console.log(data)
+// }, function(error){
+//     console.log("error",error);
+// })
+
+function Promise(fn){
+    var state = "pending";
+    var value = null;
+    var callbacks = [];
+    var test = Math.random();
+    console.log(test,"test");
+    this.then = function(onFulfilled){
+        console.log(test, 333)
+        return new Promise(function(resolve){
+            console.log(test, 444);
+            handle({
+                onFulfilled: onFulfilled || null,
+                resolve: resolve
+            });
+        });
+    };
+
+    function handle(callback){
+        console.log(callback,"callback");
+        console.log(state,"state");
+        if(state == 'pending'){
+            callbacks.push(callback);
+            console.log(test, callbacks,"pushCallbacks")
+            return
+        }
+        // if(!callback.onResolved){
+        //     debugger
+        //     console.log(callback.resolve,"callback.resolve");
+        //     callback.resolve(value);
+        //     return;
+        // }
+        console.log(111);
+        var ret = callback.onFulfilled(value);
+        callback.resolve(ret);
+    }
+    function resolve(newValue){
+        console.log(test,newValue,"resolve");
+        if (newValue && (typeof newValue === 'object' || typeof newValue === 'function')){
+            var then = newValue.then;
+            if (typeof then === 'function') {
+                then.call(newValue, resolve);
+                return;
+            }
+        }
+        state = 'fulfilled';
+        value = newValue;
+        setTimeout(function () {
+            console.log(test,callbacks,"callbacks");
+            callbacks.forEach(function (callback) {
+                handle(callback);
+            });
+        }, 0);
+    }
+    fn(resolve)
+}
+var p = new Promise(function(resovle){
+    console.log(11);
+    setTimeout(function(){
+        resovle('a')
+    },3000)
+});
+console.log(p.then,"p.then");
+p.then(function(a){
+    console.log(a,"aaa")
+    //由于这里没有then所以这里的promise回调很快会执行完
+    return new Promise(function(resolve){
+        setTimeout(function(){
+            resolve("shengzhuliang")
+        },2000)
+    })
+}).then(function(b){
+    console.log(b,"bbbaaa")
+})
+
+
+function Animal(name){
+    this.name = name;
+}
+var cat = new Animal('cat');
+console.log(cat.__proto__ === Animal.prototype)
+</script>
+</html>

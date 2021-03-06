@@ -1,0 +1,6 @@
+div {
+    width: .2rem;
+    height: .2rem;
+    background: .2rem .2rem 3rem 0 red;
+    border: .01rem solid red;
+}

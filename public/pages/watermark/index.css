@@ -1,0 +1,16 @@
+body {
+    background-color: gray;
+    color: white;
+}
+#watermark {
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    pointer-events: none;
+    /* background: url('./fu.png'); */
+    background-repeat: repeat;
+    background-size: 30px 30px;
+    opacity: .1;
+}

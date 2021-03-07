@@ -28,15 +28,25 @@ router.get('/watermark', function (req, res, next) {
 });
 
 // Web Worker
+// 专用web worker
 router.get('/simpleWorker', function (req, res, next) {
   res.render(path.join(__dirname, '../public/pages/webWorker/simpleWorker.ejs'), {title:""});
 });
 
+// 共享web worker1
 router.get('/shareWorker', function (req, res, next) {
   res.render(path.join(__dirname, '../public/pages/webWorker/shareWorker.ejs'), {title:""});
 });
 
+// 共享web worker2
 router.get('/shareWorker2', function (req, res, next) {
   res.render(path.join(__dirname, '../public/pages/webWorker/shareWorker2.ejs'), {title:""});
 });
+
+// canvas 压缩图片
+router.get('/canvasCompress', function (req, res, next) {
+  res.render(path.join(__dirname, '../public/pages/canvasCompress/index.ejs'), {title:""});
+});
+
+// 
 module.exports = router;

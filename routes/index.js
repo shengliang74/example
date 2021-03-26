@@ -14,8 +14,20 @@ router.get('/', function (req, res, next) {
 });
 
 // 水印
+// router.get('/watermark', function (req, res, next) {
+//   res.render(path.join(__dirname, '../public/pages/watermark/index.html'), {
+//     title: '我是订单列表页',
+//     content: '<h2>我是标题2</h2>',
+//     person: {
+//       name: '张三',
+//       age: 20,
+//       sex: true,
+//       fav: ['读书', '听音乐', '唱歌']
+//     }
+//   });
+// });
 router.get('/watermark', function (req, res, next) {
-  res.render(path.join(__dirname, '../public/pages/watermark/index'), {
+  res.render('watermark.html', {
     title: '我是订单列表页',
     content: '<h2>我是标题2</h2>',
     person: {

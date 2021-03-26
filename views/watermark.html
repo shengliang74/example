@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+    <title>水印效果</title>
+    <link rel="stylesheet" href="pages/watermark/index.css">
+</head>
+<body>
+    订单列表2
+    <!-- 带=的不会解析HTML标签，
+        带-的会解析HTML标签 
+        判断语句注意：1.不能加=号 2.闭合{}-->
+    <%= title %>
+    <hr>
+    <%- content %>
+    <hr>
+    姓名：<%= person.name %><br />
+    年龄：<%= person.age %><br />
+    姓别：<%= person.sex?"男":"女" %><br />
+    姓别：<% if(person.sex){ %>
+                <span style="color: red">男</span>
+          <% }else{     %>
+                女
+          <% } %>
+    <hr>
+    爱好：
+    <% for(var i = 0; i < person.fav.length ;i++){%>
+    <%=     person.fav[i]%>
+    <%  }%>
+    <div id="watermark"></div>
+    <canvas id="canvas" style="display: none;"></canvas>
+</body>
+<script src="pages/watermark/index.js"></script>

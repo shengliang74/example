@@ -12,8 +12,9 @@ var app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
-app.engine('ejs',ejs.renderFile);
-app.set('view engine', 'ejs');
+// app.engine('ejs',ejs.renderFile); // 使用.ejs作为模板
+app.engine('html',ejs.renderFile); // 使用 html作为模板
+app.set('view engine', "ejs");
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -40,7 +41,7 @@ app.use(function (err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.render('error');
+  res.render('error.html',{error: err.message});
 });
 
 var server = app.listen(3000, function () {

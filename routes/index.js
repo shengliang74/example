@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 let path = require('path')
+const publicPath = "../public/pages/";
 
 // middleware that is specific to this router
 router.use(function timeLog(req, res, next) {
@@ -14,20 +15,8 @@ router.get('/', function (req, res, next) {
 });
 
 // 水印
-// router.get('/watermark', function (req, res, next) {
-//   res.render(path.join(__dirname, '../public/pages/watermark/index.html'), {
-//     title: '我是订单列表页',
-//     content: '<h2>我是标题2</h2>',
-//     person: {
-//       name: '张三',
-//       age: 20,
-//       sex: true,
-//       fav: ['读书', '听音乐', '唱歌']
-//     }
-//   });
-// });
 router.get('/watermark', function (req, res, next) {
-  res.render('watermark.html', {
+  res.render(path.join(__dirname, publicPath+'watermark/index.html'), {
     title: '我是订单列表页',
     content: '<h2>我是标题2</h2>',
     person: {
@@ -42,7 +31,7 @@ router.get('/watermark', function (req, res, next) {
 // Web Worker
 // 专用web worker
 router.get('/simpleWorker', function (req, res, next) {
-  res.render(path.join(__dirname, '../public/pages/webWorker/simpleWorker.ejs'), {title:""});
+  res.render(path.join(__dirname,  `${publicPath}webWorker/simpleWorker.ejs`), {title:""});
 });
 
 // 共享web worker1

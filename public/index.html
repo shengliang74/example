@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,34 +8,108 @@
     <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
     <title>Temp</title>
     <style>
-        .bfcWrap {
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        .test {
+           
+            margin: 10px 20px;
+            width: 1000px;
+            height: 100px;
+            border: 1px solid green;
+        }
+        .select {
             box-sizing: border-box;
-            padding: 20px;
-            width: 200px;
-            height: 200px;
-            border:1px solid red;
+            position: absolute;
+            top: 100px;
+            margin: 50px;
+            padding: 10px;
+            width: 30px;
+            height: 30px;
         }
-        .bfc1 {
-            display: inline-block;
-            width: 100%;
-            height: 200%;
-            background-color: green;
-        }
+        @keyframes cursorImg {
+0%, 100% {
+    opacity: 0;
+}
+50% {
+    opacity: 1;
+}
+}
+img{
+    display: inline-block;
+    margin-left: 100px;
+    width: 2px;
+    height: 20px;
+    background-color: black;
+  animation:cursorImg 1s infinite steps(1, start);
+}
+// https://www.zhangxinxu.com/wordpress/2018/06/css3-animation-steps-step-start-end/
     </style>
 </head>
+
 <body>
-    <div class="bfcWrap">
-        <span class="bfc1"></span>
-    </div>
+    
+    <div class="test">
+        <div class="select">
+          <div class="inner">
+          </div>
+        </div>
+      </div>
+      <span class="wrapper">
+        <img src="">
+  </span>
 </body>
-<script type="text/javascript">
-//    var regex = /\d{2,5}/g;
-// var string = "123 1234 12345 123456";
-// console.log( string.match(regex) );
+<script type="module">
+    let se = document.querySelector('.select');
+    let rect =  se.getBoundingClientRect();
+    // console.log(rect)
+    console.log(se.offsetTop, se.offsetLeft)
+    console.log(se.scrollTop)
+    console.log(document.body.scrollTop)
+    setTimeout(function(){
+        console.log(se.offsetTop)
+    console.log(se.scrollTop)
+    console.log(document.body.scrollTop)
+
+        // console.log(se.getBoundingClientRect())
+    }, 5000)
+    // bottom: 112
+// height: 102 
+// left: 28
+// right: 330
+// top: 10
+// width: 302
+// x: 28
+// y: 10
+
+var sum = function(arr, target){
+    arr.sort();
+    let len = arr.length;
+    let resJson = {}
+    console.log(arr)
+    for(let x=0; x<=len-4; x++){
+        for(let y=x+1; y<=len-3; y++){
+            for(let z=y+1; z<=len-2; z++){
+                for(let i=z+1; i<=len-1; i++){
+                    let resItem = [arr[x], arr[y], arr[z], arr[i]];
+                    console.log(x,y,z,i)
+                    console.log(resItem)
+                    if(arr[x]+arr[y]+arr[z]+arr[i] === target){
+                        
+                        let key = resItem.join('');
+                        console.log(key)
+                        resJson[key] = resItem;
+                    }
+                }
+            }
+        }
+    }
+    return Object.values(resJson);
+}
+
+console.log(sum([1,0,-1,0,-2,2],0))
 
 
-var regex = /a.?b/
-var string = "aaacb"
-console.log(string.match(regex)) // acbacb "acb"
 </script>
 </html>

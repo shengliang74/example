@@ -49,5 +49,10 @@ router.get('/canvasCompress', function (req, res, next) {
   res.render(path.join(__dirname, '../public/pages/canvasCompress/index.ejs'), {title:""});
 });
 
+// offsetTop相关属性
+router.get('/offsetTop', function(req, res, next){
+  res.render(path.join(__dirname, `${publicPath}offsetTop/index.html`), {title:""});
+})
+
 // 
 module.exports = router;
